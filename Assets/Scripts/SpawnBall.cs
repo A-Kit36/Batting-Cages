@@ -6,8 +6,12 @@ public class SpawnBall : MonoBehaviour
 {
     public GameObject Ball;
 
-    public void Spawn()
+    private void OnEnable()
     {
-        GameObject.Instantiate(Ball, this.gameObject.transform);
+        AtBatManager.AtBatDone += SpawnResult;
+    }
+    public void SpawnResult(AtBatResult atBat)
+    {        
+        GameObject.Instantiate(Ball, this.gameObject.transform);  
     }
 }

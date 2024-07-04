@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Batter : MonoBehaviour
-{
+{   
     public BatterStats Stats;
 
     private float _walkPercent = 0f;
@@ -31,46 +31,69 @@ public class Batter : MonoBehaviour
         _hitoutPercent = (Stats.HitOut / Stats.AtBats) * 100 + _strikeoutPercent;
     }
 
-    public void SimulateAtBat()
+    public AtBatResult SimulateAtBat()
     {
         float randNum = UnityEngine.Random.Range(1f, 100f);
+        AtBatResult atBat = new AtBatResult();
 
         if (randNum <= _walkPercent)
         {
-            Debug.Log("Walk");
+            //Debug.Log("Walk");
+            atBat = AtBatResult.Walk;
         }
         else if (randNum <= _singlePercent) 
         {
-            Debug.Log("Single");
+            //Debug.Log("Single");
+            atBat = AtBatResult.Single;
         }
         else if (randNum <= _doublePercent)
         {
-            Debug.Log("Double");
+            //Debug.Log("Double");
+            atBat = AtBatResult.Double;
         }
         else if (randNum <= _triplePercent)
         {
-            Debug.Log("Triple");
+           /* Debug.Log("Triple");*/
+            atBat = AtBatResult.Tripple;
         }
         else if (randNum <= _homerunPercent)
         {
-            Debug.Log("HomeRun");
+            //Debug.Log("HomeRun");
+            atBat = AtBatResult.Homerun;
         }
         else if (randNum <= _strikeoutPercent)
         {
-            Debug.Log("Strike Out");
+            //Debug.Log("Strike Out");
+            atBat = AtBatResult.Strikeout;
         }
         else if (randNum <= _hitoutPercent)
         {
             float flyOrGround = UnityEngine.Random.Range(1, 3);
             if (flyOrGround == 1)
             {
-                Debug.Log("Fly Out");
+                //Debug.Log("Fly Out");
+                atBat = AtBatResult.Flyout;
             }
             else
             {
-                Debug.Log("Ground Out");
+                //Debug.Log("Ground Out");
+                atBat = AtBatResult.Groundout;
             }
         }
 
+        return atBat;
+
     }
+}
+
+public enum AtBatResult
+{
+    Walk,
+    Single,
+    Double,
+    Tripple,
+    Homerun,
+    Strikeout,
+    Flyout,
+    Groundout
 }
